@@ -1,0 +1,19 @@
+---
+- name: "Check essential packages"
+  apt:
+    name: "{{item}}"
+    state: present
+    update_cache: true
+  with_items: "{{ apt_packages }}"
+
+- name: Validate timezone variable
+  stat:
+    path: /usr/share/zoneinfo/{{ ntp_timezone }}
+  register: timezone_path
+  changed_when: false
+
+- name: Explain timezone error
+  fail:
+    msg: "{{ ntp_timezone }} is not a valid timezone. For a list of valid timezones, check https://php.net/manual/en/timezones.php"
+  when: not timezone_path.stat.exists
+

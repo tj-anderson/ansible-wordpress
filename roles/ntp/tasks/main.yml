@@ -1,0 +1,15 @@
+---
+- name: Configure server timezone
+  timezone:
+    name: "{{ ntp_timezone }}"
+
+- name: Install ntp package
+  package:
+    name: ntp
+    state: latest
+
+- name: Start ntp time service
+  service:
+    name: ntp
+    state: started
+    enabled: yes

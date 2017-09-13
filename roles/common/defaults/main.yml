@@ -1,0 +1,10 @@
+ntp_timezone: America/Los_Angeles
+apt_packages:
+  - htop
+  - python-software-properties
+  - python-pycurl
+  - build-essential
+  - curl
+  - git
+  - vim-nox
+
