@@ -1,0 +1,22 @@
+---
+- name: Check if Composer is installed.
+  stat: "path={{ composer_path }}"
+  register: composer_bin
+
+- name: Download Composer
+  get_url:
+    url: "{{ composer_url }}"
+    dest: /tmp/composer-installer.php
+  when: not composer_bin.stat.exists
+
+- name: Run Composer Installer
+  command: "php composer-installer.php"
+  args:
+    chdir: /tmp
+  when: not composer_bin.stat.exists
+
+- name: "Copy composer.phar to {{ composer_path }}"
+  shell: >
+    mv /tmp/composer.phar {{ composer_path }}
+    creates={{ composer_path }}
+  when: not composer_bin.stat.exists
