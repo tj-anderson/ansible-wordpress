@@ -1,0 +1,12 @@
+---
+- name: "Wordpress Server setup"
+  hosts: web
+  become: yes
+
+  roles:
+    - { role: common, tags: [common] }
+    - { role: ntp, tags: [ntp] }
+    - { role: php, tags: [php] }
+    - { role: nginx, tags: [nginx] }
+    - { role: wp-cli, tags: [wp-cli] }
+    - { role: composer, tags: [composer] }
